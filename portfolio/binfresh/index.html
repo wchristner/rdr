@@ -1,1 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bin Fresh — Trash Bin Cleaning That Doesn't Stink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --orange: #e8571a;
+      --orange-light: #f07842;
+      --sun: #f5c842;
+      --cream: #fdf6e3;
+      --brown: #3d2b1f;
+      --brown-soft: #6b4c3b;
+      --tan: #c9a882;
+      --tan-light: #e8d5be;
+      --green: #5b7c3a;
+      --green-light: #7fad50;
+      --off-white: #faf7f0;
+    }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--brown);
+      overflow-x: hidden;
+    }
+
+    /* ──────── NAV ──────── */
+    header {
+      position: fixed;
+      top: 0; width: 100%;
+      z-index: 100;
+      padding: 1rem 3rem;
+      background: rgba(253,246,227,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--brown);
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.7rem;
+      color: var(--brown);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .logo-dot {
+      width: 12px; height: 12px;
+      background: var(--orange);
+      border-radius: 50%;
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    nav ul a {
+      color: var(--brown-soft);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--orange); }
+
+    .nav-cta {
+      background: var(--orange) !important;
+      color: white !important;
+      padding: 0.55rem 1.4rem !important;
+      border-radius: 50px !important;
+      font-weight: 700 !important;
+      transition: background 0.2s, transform 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--orange-light) !important; transform: scale(1.04) !important; }
+
+    /* ──────── HERO ──────── */
+    .hero {
+      min-height: 100vh;
+      padding-top: 80px;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* retro circle decoration */
+    .hero-circles {
+      position: absolute;
+      top: 0; right: 0;
+      width: 55vw; height: 55vw;
+      pointer-events: none;
+    }
+
+    .circle-big {
+      position: absolute;
+      top: 5%; right: -5%;
+      width: 48vw; height: 48vw;
+      border-radius: 50%;
+      background: var(--orange);
+      opacity: 0.12;
+    }
+
+    .circle-med {
+      position: absolute;
+      top: 15%; right: 5%;
+      width: 30vw; height: 30vw;
+      border-radius: 50%;
+      background: var(--sun);
+      opacity: 0.25;
+    }
+
+    .circle-sm {
+      position: absolute;
+      top: 8%; right: 22%;
+      width: 8vw; height: 8vw;
+      border-radius: 50%;
+      background: var(--orange);
+      opacity: 0.5;
+    }
+
+    /* wavy line */
+    .hero-wave {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; 
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--sun);
+      color: var(--brown);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5vw, 4.8rem);
+      line-height: 1.1;
+      color: var(--brown);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 .squiggle {
+      color: var(--orange);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero h1 .squiggle::after {
+      content: '';
+      position: absolute;
+      bottom: -6px; left: 0;
+      width: 100%; height: 4px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8'%3E%3Cpath d='M0,4 Q12.5,0 25,4 Q37.5,8 50,4 Q62.5,0 75,4 Q87.5,8 100,4' fill='none' stroke='%23e8571a' stroke-width='2.5'/%3E%3C/svg%3E") repeat-x center / 100px 8px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--brown-soft);
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      max-width: 440px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-orange {
+      background: var(--orange);
+      color: white;
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-orange:hover { background: var(--orange-light); transform: translateY(-3px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--brown);
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      border: 2px solid var(--brown);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover { background: var(--brown); color: var(--cream); transform: translateY(-3px); }
+
+    /* hero right card stack */
+    .hero-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .hero-card {
+      background: white;
+      border: 2px solid var(--brown);
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 4px 4px 0 var(--brown);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .hero-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--brown);
+    }
+
+    .hc-icon { font-size: 2rem; flex-shrink: 0; }
+
+    .hc-text h4 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--brown);
+    }
+
+    .hc-text p {
+      font-size: 0.82rem;
+      color: var(--brown-soft);
+    }
+
+    /* ──────── SECTION COMMON ──────── */
+    .section {
+      padding: 7rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    #contact, #reverse-graffiti, footer { position: relative; z-index: 1; }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1rem;
+    }
+
+    .section-tag::before {
+      content: '✦';
+      font-size: 0.6rem;
+    }
+
+    h2.big-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--brown);
+      margin-bottom: 3rem;
+      line-height: 1.15;
+    }
+
+    /* ──────── SERVICES ──────── */
+    #services { background: var(--off-white); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--cream);
+      border: 2px solid var(--brown);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 6px 6px 0 var(--brown);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .service-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 var(--brown);
+    }
+
+    .service-card:nth-child(2) { background: var(--orange); color: white; }
+    .service-card:nth-child(2) h3 { color: white; }
+    .service-card:nth-child(2) p { color: rgba(255,255,255,0.8); }
+    .service-card:nth-child(2) { box-shadow: 6px 6px 0 var(--brown); }
+
+    .svc-icon { font-size: 2.5rem; margin-bottom: 1.2rem; }
+
+    .service-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--brown);
+      margin-bottom: 0.8rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--brown-soft);
+      line-height: 1.7;
+    }
+
+    /* ──────── BENEFITS ──────── */
+    #benefits {
+      background: var(--sun);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── animated wave dividers ── */
+    @keyframes wave-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes wave-scroll-rev {
+      from { transform: translateX(-50%); }
+      to   { transform: translateX(0); }
+    }
+
+    .wave-wrap {
+      position: absolute;
+      left: 0;
+      width: 200%;
+      height: 70px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .wave-wrap.top { top: -2px; }
+    .wave-wrap.bot { bottom: -2px; }
+    .wave-wrap svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .wave-wrap.fwd svg { animation: wave-scroll     7s linear infinite; }
+    .wave-wrap.rev svg { animation: wave-scroll-rev 9s linear infinite; }
+    .wave-wrap.slow svg { animation-duration: 12s; }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      padding: 2rem 0;
+    }
+
+    .benefit-item {
+      background: white;
+      border: 2px solid var(--brown);
+      border-radius: 16px;
+      padding: 1.8rem;
+      box-shadow: 4px 4px 0 var(--brown);
+      transition: transform 0.2s;
+    }
+
+    .benefit-item:hover { transform: translate(-2px, -2px); }
+
+    .bi-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+
+    .benefit-item h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--brown);
+      margin-bottom: 0.5rem;
+    }
+
+    .benefit-item p { font-size: 0.87rem; color: var(--brown-soft); line-height: 1.65; }
+
+    /* ──────── PROCESS ──────── */
+    #process { background: var(--off-white); }
+
+    .process-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      position: relative;
+    }
+
+    .process-flow::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: calc(12.5% + 20px);
+      right: calc(12.5% + 20px);
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--orange) 0, var(--orange) 8px, transparent 8px, transparent 16px);
+    }
+
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 0.5rem;
+    }
+
+    .step-bubble {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--orange);
+      border: 3px solid var(--brown);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.8rem;
+      color: white;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+      box-shadow: 3px 3px 0 var(--brown);
+      transition: transform 0.2s;
+    }
+
+    .process-step:nth-child(2) .step-bubble { background: var(--sun); color: var(--brown); }
+    .process-step:nth-child(3) .step-bubble { background: var(--green); }
+    .process-step:nth-child(4) .step-bubble { background: var(--brown); }
+
+    .process-step:hover .step-bubble { transform: scale(1.1) rotate(-5deg); }
+
+    .process-step h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--brown);
+      margin-bottom: 0.6rem;
+    }
+
+    .process-step p { font-size: 0.86rem; color: var(--brown-soft); line-height: 1.65; }
+
+    /* ──────── PRICING ──────── */
+    #pricing { background: var(--cream); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .price-card {
+      background: white;
+      border: 2px solid var(--brown);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 6px 6px 0 var(--brown);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .price-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 var(--brown);
+    }
+
+    .price-card.featured {
+      background: var(--brown);
+      color: white;
+    }
+
+    .price-plan-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--brown);
+    }
+
+    .price-card.featured .price-plan-name { color: var(--sun); }
+
+    .price-big {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 3.5rem;
+      color: var(--orange);
+      line-height: 1;
+    }
+
+    .price-card.featured .price-big { color: var(--sun); }
+
+    .price-freq {
+      font-size: 0.82rem;
+      color: var(--tan);
+      margin-bottom: 2rem;
+    }
+
+    .price-card.featured .price-freq { color: rgba(255,255,255,0.5); }
+
+    .price-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .price-features li {
+      padding: 0.55rem 0;
+      border-bottom: 1px dashed var(--tan-light);
+      font-size: 0.9rem;
+      color: var(--brown-soft);
+      display: flex;
+      gap: 0.7rem;
+      align-items: center;
+    }
+
+    .price-card.featured .price-features li {
+      color: rgba(255,255,255,0.75);
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+
+    .price-features li::before {
+      content: '✓';
+      color: var(--green-light);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .price-card.featured .price-features li::before { color: var(--sun); }
+
+    .btn-price {
+      display: block;
+      text-align: center;
+      padding: 0.85rem;
+      background: var(--orange);
+      color: white;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-price:hover { background: var(--orange-light); transform: scale(1.03); }
+
+    .price-card.featured .btn-price {
+      background: var(--sun);
+      color: var(--brown);
+    }
+
+    .price-card.featured .btn-price:hover { background: #f7d060; }
+
+    /* ──────── CONTACT ──────── */
+    #contact {
+      background: var(--brown);
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 7rem 3rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .contact-text h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      color: var(--sun);
+      margin-bottom: 1.5rem;
+      line-height: 1.15;
+    }
+
+    .contact-text p {
+      color: var(--tan);
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .contact-cards { display: flex; flex-direction: column; gap: 1rem; }
+
+    .c-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: background 0.2s;
+    }
+
+    .c-card:hover { background: rgba(255,255,255,0.13); }
+    .c-card-icon { font-size: 1.6rem; }
+    .c-card-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tan); margin-bottom: 0.2rem; }
+    .c-card-val { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--cream); }
+
+    /* ──────── FOOTER ──────── */
+    footer {
+      background: #2a1e17;
+      padding: 1.8rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--sun);
+    }
+
+    footer p { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+
+    .services-grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* reverse graffiti featured service card */
+    .rg-service-card {
+      margin-top: 1.5rem;
+      background: var(--brown);
+      border: 2px solid var(--brown);
+      border-radius: 20px;
+      padding: 2.5rem 3rem;
+      box-shadow: 6px 6px 0 #1e150e;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .rg-service-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 #1e150e;
+    }
+    .rg-service-left h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: var(--sun);
+      margin-bottom: 1rem;
+    }
+    .rg-service-left p {
+      font-size: 0.95rem;
+      color: var(--tan);
+      line-height: 1.75;
+    }
+    .rg-mini-fact {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px dashed rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+    }
+    .rg-mini-fact:last-child { border-bottom: none; }
+    .rg-mini-fact span:first-child { font-size: 1.1rem; flex-shrink: 0; }
+    @media (max-width: 900px) {
+      .rg-service-card { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+
+    .rg-fact {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: background 0.2s;
+    }
+
+    .rg-fact:hover { background: rgba(255,255,255,0.12); }
+
+    /* ──────── ANIMATIONS ──────── */
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%       { transform: translateY(-22px) scale(1.04); }
+    }
+    @keyframes float-med {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%       { transform: translateY(-14px) scale(1.06); }
+    }
+    @keyframes float-sm {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50%       { transform: translateY(-30px) rotate(15deg); }
+    }
+    @keyframes dot-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%       { transform: scale(1.6); opacity: 0.6; }
+    }
+    @keyframes hero-fade-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .circle-big { animation: float-slow 9s ease-in-out infinite; }
+    .circle-med { animation: float-med  7s ease-in-out infinite 1s; }
+    .circle-sm  { animation: float-sm   5s ease-in-out infinite 0.5s; }
+    .logo-dot   { animation: dot-pulse  2.5s ease-in-out infinite; }
+
+    .hero-inner > div:first-child { animation: hero-fade-up 0.9s ease both; }
+    .hero-cards { animation: hero-fade-up 0.9s ease 0.3s both; }
+
+    /* pop-in: only hidden when JS is running (js-ready class added by script) */
+    .js-ready .pop-in {
+      opacity: 0;
+      transform: translateY(28px) scale(0.97);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .js-ready .pop-in.show { opacity: 1; transform: translateY(0) scale(1); }
+
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-cards { display: none; }
+      .services-grid, .services-grid-4, .benefits-grid, .process-flow, .pricing-grid { grid-template-columns: 1fr; }
+      .process-flow::before { display: none; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .rg-two-col { grid-template-columns: 1fr !important; gap: 2rem !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo"><span class="logo-dot"></span>Bin Fresh</div>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#reverse-graffiti">Reverse Graffiti</a></li>
+        <li><a href="#benefits">Benefits</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact" class="nav-cta">Get Started</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-circles">
+      <div class="circle-big"></div>
+      <div class="circle-med"></div>
+      <div class="circle-sm"></div>
+    </div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge-pill">✨ Professional Bin Sanitizing</div>
+        <h1>Fresh, Clean,<br><span class="squiggle">Sanitized</span><br>Bins.</h1>
+        <p>Professional trash bin cleaning and sanitizing for your home or business — done by hand with high-pressure power sprayers. Say goodbye to odors, bacteria, and pests!</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn-orange">Get Started Today</a>
+          <a href="#services" class="btn-outline">Our Services</a>
+        </div>
+      </div>
+      <div class="hero-cards">
+        <div class="hero-card">
+          <span class="hc-icon">🦠</span>
+          <div class="hc-text">
+            <h4>99.9% Bacteria Killed</h4>
+            <p>Hand-cleaned with power sprayer & sanitizer</p>
+          </div>
+        </div>
+        <div class="hero-card">
+          <span class="hc-icon">♻️</span>
+          <div class="hc-text">
+            <h4>100% Eco-Friendly</h4>
+            <p>Biodegradable, safe products</p>
+          </div>
+        </div>
+        <div class="hero-card">
+          <span class="hc-icon">⏰</span>
+          <div class="hc-text">
+            <h4>No Need to Be Home</h4>
+            <p>We work on your trash day</p>
+          </div>
+        </div>
+        <div class="hero-card">
+          <span class="hc-icon">💵</span>
+          <div class="hc-text">
+            <h4>From $25/bin/month</h4>
+            <p>Cancel anytime, no contracts</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <div class="section-inner">
+      <div class="section-tag">What we do</div>
+      <h2 class="big-title">Our Services</h2>
+      <div class="services-grid">
+        <div class="service-card pop-in">
+          <div class="svc-icon">🏠</div>
+          <h3>Residential Cleaning</h3>
+          <p>Keep your home bins fresh and odor-free with our regular cleaning service. Each bin is hand-scrubbed and power-sprayed with eco-safe sanitizer — perfect for families who want a cleaner, healthier environment.</p>
+        </div>
+        <div class="service-card pop-in">
+          <div class="svc-icon">🏢</div>
+          <h3>Commercial Cleaning</h3>
+          <p>Professional bin sanitizing for businesses, restaurants, and commercial properties. We come to you, clean on-site by hand and power sprayer, and leave your bins spotless to maintain hygiene standards.</p>
+        </div>
+        <div class="service-card pop-in">
+          <div class="svc-icon">♻️</div>
+          <h3>Eco-Friendly Solutions</h3>
+          <p>We use environmentally safe, biodegradable cleaning products that are tough on germs but gentle on the planet. Our hand-clean method means zero wastewater runoff into storm drains.</p>
+        </div>
+      </div>
+
+      <!-- Reverse Graffiti featured card -->
+      <div class="rg-service-card pop-in">
+        <div class="rg-service-left">
+          <div class="svc-icon" style="font-size:3rem;margin-bottom:1rem;">🎨</div>
+          <h3>Reverse Graffiti Advertising</h3>
+          <p>Turn dirty sidewalks, parking lots, and concrete surfaces into bold branded advertisements — using nothing but water and our power sprayer. No paint. No permits. No mess. Just clean.</p>
+          <a href="#reverse-graffiti" class="btn-orange" style="margin-top:1.5rem;display:inline-block;">See Full Details & Pricing →</a>
+        </div>
+        <div class="rg-service-right">
+          <div class="rg-mini-fact">
+            <span>🌿</span><span>100% eco-friendly — water only, no chemicals</span>
+          </div>
+          <div class="rg-mini-fact">
+            <span>📍</span><span>Placed at street level where foot traffic is highest</span>
+          </div>
+          <div class="rg-mini-fact">
+            <span>🎨</span><span>Custom stencil of your logo or message</span>
+          </div>
+          <div class="rg-mini-fact">
+            <span>⏳</span><span>Lasts 2–8 weeks, fades naturally</span>
+          </div>
+          <div class="rg-mini-fact">
+            <span>💵</span><span>Starting from $75 per placement</span>
+          </div>
+          <div class="rg-mini-fact">
+            <span>✅</span><span>Design approval before we spray a single drop</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section id="benefits" class="section">
+    <!-- animated wave top (cream on yellow) -->
+    <div class="wave-wrap top fwd">
+      <svg viewBox="0 0 2400 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,35 Q150,0 300,35 Q450,70 600,35 Q750,0 900,35 Q1050,70 1200,35 Q1350,0 1500,35 Q1650,70 1800,35 Q1950,0 2100,35 Q2250,70 2400,35 L2400,0 L0,0 Z" fill="#faf7f0"/>
+      </svg>
+    </div>
+    <div class="section-inner">
+      <div class="section-tag">Why Bin Fresh</div>
+      <h2 class="big-title">Why Choose Bin Fresh?</h2>
+      <div class="benefits-grid">
+        <div class="benefit-item pop-in">
+          <div class="bi-icon">🦠</div>
+          <h3>Eliminate Bacteria</h3>
+          <p>Our high-pressure power sprayer and hospital-grade sanitizer kills 99.9% of bacteria and viruses inside every bin.</p>
+        </div>
+        <div class="benefit-item pop-in">
+          <div class="bi-icon">🚫</div>
+          <h3>Remove Odors</h3>
+          <p>Say goodbye to unpleasant smells that attract pests and bother neighbors. Every clean includes deodorizing treatment.</p>
+        </div>
+        <div class="benefit-item pop-in">
+          <div class="bi-icon">🐛</div>
+          <h3>Prevent Pests</h3>
+          <p>Regular cleaning eliminates the food sources and breeding grounds for insects and rodents before they become a problem.</p>
+        </div>
+        <div class="benefit-item pop-in">
+          <div class="bi-icon">🙌</div>
+          <h3>Done by Hand</h3>
+          <p>Every bin is hand-scrubbed and power-sprayed on-site — no truck needed, no missed corners, and no shortcuts.</p>
+        </div>
+        <div class="benefit-item pop-in">
+          <div class="bi-icon">⏰</div>
+          <h3>Convenient Service</h3>
+          <p>We clean your bins on collection day after they're emptied. No need to be home — just set it and forget it!</p>
+        </div>
+        <div class="benefit-item pop-in">
+          <div class="bi-icon">✨</div>
+          <h3>Like-New Condition</h3>
+          <p>Extend the life of your bins and keep them looking and smelling fresh with consistent, professional care.</p>
+        </div>
+      </div>
+    </div>
+    <!-- animated wave bottom (cream on yellow) -->
+    <div class="wave-wrap bot rev">
+      <svg viewBox="0 0 2400 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,35 Q150,70 300,35 Q450,0 600,35 Q750,70 900,35 Q1050,0 1200,35 Q1350,70 1500,35 Q1650,0 1800,35 Q1950,70 2100,35 Q2250,0 2400,35 L2400,70 L0,70 Z" fill="#faf7f0"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="section">
+    <div class="section-inner">
+      <div class="section-tag">How it works</div>
+      <h2 class="big-title">Our Process</h2>
+      <div class="process-flow">
+        <div class="process-step pop-in">
+          <div class="step-bubble">1</div>
+          <h3>Schedule Service</h3>
+          <p>Choose your plan and set up recurring service on your trash day.</p>
+        </div>
+        <div class="process-step pop-in">
+          <div class="step-bubble">2</div>
+          <h3>We Come to You</h3>
+          <p>After your bins are emptied on collection day, we arrive on-site with our power sprayer and supplies.</p>
+        </div>
+        <div class="process-step pop-in">
+          <div class="step-bubble">3</div>
+          <h3>Hand-Clean & Sanitize</h3>
+          <p>We hand-scrub the interior and exterior, then power-spray with sanitizer and deodorizer for a deep clean.</p>
+        </div>
+        <div class="process-step pop-in">
+          <div class="step-bubble">4</div>
+          <h3>Enjoy Fresh Bins</h3>
+          <p>Your bins are returned clean, sanitized, and odor-free!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVERSE GRAFFITI -->
+  <section id="reverse-graffiti" class="section" style="background:var(--brown);color:var(--cream);position:relative;overflow:hidden;">
+    <!-- animated wave top (off-white on brown) -->
+    <div class="wave-wrap top rev">
+      <svg viewBox="0 0 2400 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,35 Q150,70 300,35 Q450,0 600,35 Q750,70 900,35 Q1050,0 1200,35 Q1350,70 1500,35 Q1650,0 1800,35 Q1950,70 2100,35 Q2250,0 2400,35 L2400,0 L0,0 Z" fill="#faf7f0"/>
+      </svg>
+    </div>
+    <div class="section-inner" style="padding-top:5rem;">
+      <div class="section-tag" style="color:var(--sun);">Advertising Service</div>
+      <h2 class="big-title" style="color:var(--sun);">Reverse Graffiti<br>Advertising</h2>
+      <div class="rg-two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
+        <div>
+          <p style="font-size:1.05rem;line-height:1.8;color:var(--tan);margin-bottom:1.5rem;">
+            Reverse graffiti (also called <strong style="color:var(--cream);">clean tagging</strong> or <strong style="color:var(--cream);">grime writing</strong>) is a form of eco-advertising where we selectively <em>clean</em> a dirty surface to reveal a crisp, high-contrast image or message — using nothing but water and our power sprayer.
+          </p>
+          <p style="font-size:1.05rem;line-height:1.8;color:var(--tan);margin-bottom:1.5rem;">
+            No paint. No chemicals. No permits required in most areas. The "ad" naturally fades as the surrounding surface gets dirty again, making it a temporary, fully reversible, and eco-friendly marketing method.
+          </p>
+          <p style="font-size:1.05rem;line-height:1.8;color:var(--tan);">
+            Perfect for sidewalks, parking lots, driveways, concrete walls, and curbs. Great for grand openings, events, storefronts, and neighborhoods that want a memorable local presence.
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="rg-fact pop-in">
+            <span style="font-size:1.5rem;">🌿</span>
+            <div>
+              <h4 style="font-family:'Syne',sans-serif;font-weight:800;color:var(--sun);margin-bottom:0.3rem;">100% Eco-Friendly</h4>
+              <p style="font-size:0.88rem;color:var(--tan);line-height:1.6;">No paint, no solvents, no chemicals — just water pressure and a stencil. Naturally biodegrades as rain and foot traffic restore the surface.</p>
+            </div>
+          </div>
+          <div class="rg-fact pop-in">
+            <span style="font-size:1.5rem;">📍</span>
+            <div>
+              <h4 style="font-family:'Syne',sans-serif;font-weight:800;color:var(--sun);margin-bottom:0.3rem;">High Foot-Traffic Impact</h4>
+              <p style="font-size:0.88rem;color:var(--tan);line-height:1.6;">Placed right where your customers walk. Sidewalk-level messaging gets noticed at eye level in a way billboards and digital ads can't match.</p>
+            </div>
+          </div>
+          <div class="rg-fact pop-in">
+            <span style="font-size:1.5rem;">🎨</span>
+            <div>
+              <h4 style="font-family:'Syne',sans-serif;font-weight:800;color:var(--sun);margin-bottom:0.3rem;">Custom Stencils</h4>
+              <p style="font-size:0.88rem;color:var(--tan);line-height:1.6;">We create a custom stencil of your logo, message, or design. You approve before we spray a single drop.</p>
+            </div>
+          </div>
+          <div class="rg-fact pop-in">
+            <span style="font-size:1.5rem;">⏳</span>
+            <div>
+              <h4 style="font-family:'Syne',sans-serif;font-weight:800;color:var(--sun);margin-bottom:0.3rem;">Temporary by Design</h4>
+              <p style="font-size:0.88rem;color:var(--tan);line-height:1.6;">Typically lasts 2–8 weeks depending on weather and foot traffic — ideal for limited-time promotions, events, or seasonal campaigns.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How it works for RG -->
+      <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:var(--sun);margin:4rem 0 2rem;">How It Works</h3>
+      <div class="process-flow" style="--step-count:4;">
+        <div class="process-step pop-in">
+          <div class="step-bubble" style="background:var(--orange);">1</div>
+          <h3 style="color:var(--cream);">Choose Your Spot</h3>
+          <p style="color:var(--tan);">Pick a high-traffic surface: sidewalk, parking lot, driveway, or curb near your business.</p>
+        </div>
+        <div class="process-step pop-in">
+          <div class="step-bubble" style="background:var(--sun);color:var(--brown);">2</div>
+          <h3 style="color:var(--cream);">Submit Your Design</h3>
+          <p style="color:var(--tan);">Send us your logo or message. We create a custom stencil and send you a preview for approval.</p>
+        </div>
+        <div class="process-step pop-in">
+          <div class="step-bubble" style="background:var(--orange);">3</div>
+          <h3 style="color:var(--cream);">We Clean the Ad</h3>
+          <p style="color:var(--tan);">We lay the stencil and use our power sprayer to reveal your crisp, clean design against the dirty surface.</p>
+        </div>
+        <div class="process-step pop-in">
+          <div class="step-bubble" style="background:var(--sun);color:var(--brown);">4</div>
+          <h3 style="color:var(--cream);">It Gets Noticed</h3>
+          <p style="color:var(--tan);">Passersby stop and look. Your brand lives on the ground, at eye level, in the exact place your customers walk.</p>
+        </div>
+      </div>
+    </div>
+    <!-- animated wave bottom (cream on brown) -->
+    <div class="wave-wrap bot fwd slow">
+      <svg viewBox="0 0 2400 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,35 Q150,0 300,35 Q450,70 600,35 Q750,0 900,35 Q1050,70 1200,35 Q1350,0 1500,35 Q1650,70 1800,35 Q1950,0 2100,35 Q2250,70 2400,35 L2400,70 L0,70 Z" fill="#fdf6e3"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="section">
+    <div class="section-inner">
+      <div class="section-tag">Plans & Rates</div>
+      <h2 class="big-title">Simple Pricing</h2>
+
+      <!-- Bin Cleaning Pricing -->
+      <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--brown-soft);margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:0.08em;">🗑️ Bin Cleaning</h3>
+      <div class="pricing-grid" style="margin-bottom:4rem;">
+        <div class="price-card pop-in">
+          <div class="price-plan-name">One-Time Clean</div>
+          <div class="price-big">$35</div>
+          <div class="price-freq">per bin</div>
+          <ul class="price-features">
+            <li>Hand-scrub interior & exterior</li>
+            <li>Power-spray sanitization</li>
+            <li>Deodorization treatment</li>
+            <li>No commitment required</li>
+          </ul>
+          <a href="#contact" class="btn-price">Book Now</a>
+        </div>
+        <div class="price-card featured pop-in">
+          <div class="price-plan-name">Monthly Plan</div>
+          <div class="price-big">$25</div>
+          <div class="price-freq">per bin / month</div>
+          <ul class="price-features">
+            <li>Monthly hand cleaning</li>
+            <li>Priority scheduling</li>
+            <li>Best value</li>
+            <li>Cancel anytime</li>
+          </ul>
+          <a href="#contact" class="btn-price">Get Started</a>
+        </div>
+        <div class="price-card pop-in">
+          <div class="price-plan-name">Quarterly Plan</div>
+          <div class="price-big">$30</div>
+          <div class="price-freq">per bin / quarter</div>
+          <ul class="price-features">
+            <li>Seasonal deep clean</li>
+            <li>Great for light use</li>
+            <li>Flexible scheduling</li>
+            <li>Easy billing</li>
+          </ul>
+          <a href="#contact" class="btn-price">Subscribe</a>
+        </div>
+      </div>
+
+      <!-- Reverse Graffiti Pricing -->
+      <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--brown-soft);margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:0.08em;">🎨 Reverse Graffiti Advertising</h3>
+      <div class="pricing-grid">
+        <div class="price-card pop-in">
+          <div class="price-plan-name">Single Placement</div>
+          <div class="price-big">$75</div>
+          <div class="price-freq">one location, one design</div>
+          <ul class="price-features">
+            <li>Custom stencil creation</li>
+            <li>1 surface placement</li>
+            <li>Up to 3 ft × 3 ft design</li>
+            <li>Lasts 2–4 weeks</li>
+            <li>Design approval before spray</li>
+          </ul>
+          <a href="#contact" class="btn-price">Get a Quote</a>
+        </div>
+        <div class="price-card featured pop-in">
+          <div class="price-plan-name">Campaign Pack</div>
+          <div class="price-big">$200</div>
+          <div class="price-freq">5 placements, same design</div>
+          <ul class="price-features">
+            <li>Custom stencil included</li>
+            <li>5 surface placements</li>
+            <li>Up to 4 ft × 4 ft design</li>
+            <li>Best for grand openings</li>
+            <li>Photo proof of each placement</li>
+          </ul>
+          <a href="#contact" class="btn-price">Book Campaign</a>
+        </div>
+        <div class="price-card pop-in">
+          <div class="price-plan-name">Monthly Refresh</div>
+          <div class="price-big">$120</div>
+          <div class="price-freq">per month, ongoing</div>
+          <ul class="price-features">
+            <li>Stencil reuse each visit</li>
+            <li>Up to 3 placements/month</li>
+            <li>Design can change monthly</li>
+            <li>Perfect for storefronts</li>
+            <li>Cancel anytime</li>
+          </ul>
+          <a href="#contact" class="btn-price">Start Monthly</a>
+        </div>
+      </div>
+      <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--tan);text-align:center;">* Custom sizing and multi-location discounts available. Contact us for a tailored quote.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <!-- animated wave top (cream on brown) -->
+    <div class="wave-wrap top fwd slow">
+      <svg viewBox="0 0 2400 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,35 Q150,0 300,35 Q450,70 600,35 Q750,0 900,35 Q1050,70 1200,35 Q1350,0 1500,35 Q1650,70 1800,35 Q1950,0 2100,35 Q2250,70 2400,35 L2400,0 L0,0 Z" fill="#fdf6e3"/>
+      </svg>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-text pop-in">
+        <h2>Ready for Cleaner Bins?</h2>
+        <p>Contact us today to schedule your first cleaning! We make it easy — just pick your plan and we handle everything from there.</p>
+      </div>
+      <div class="contact-cards pop-in">
+        <div class="c-card">
+          <span class="c-card-icon">📞</span>
+          <div>
+            <div class="c-card-label">Call Us</div>
+            <div class="c-card-val">(555) 123-4567</div>
+          </div>
+        </div>
+        <div class="c-card">
+          <span class="c-card-icon">✉️</span>
+          <div>
+            <div class="c-card-label">Email</div>
+            <div class="c-card-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7a13141c153a0a081f090e131d1f18131454191517">[email&#160;protected]</a></div>
+          </div>
+        </div>
+        <div class="c-card">
+          <span class="c-card-icon">📍</span>
+          <div>
+            <div class="c-card-label">Service Area</div>
+            <div class="c-card-val">Serving Your Area</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Bin Fresh</div>
+    <p>© 2026 Bin Fresh. All rights reserved. | Professional Bin Cleaning & Reverse Graffiti Advertising</p>
+  </footer>
+
+  <!-- animated background canvas -->
+  <canvas id="bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.45;"></canvas>
+
+  <script>
+    /* ── BACKGROUND CANVAS ANIMATION ── */
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, orbs, dots;
+    const COLORS = ['#e8571a','#f5c842','#c9a882','#3d2b1f'];
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    function makeOrb() {
+      return { x: Math.random()*W, y: Math.random()*H, r: 60+Math.random()*140,
+        color: COLORS[Math.floor(Math.random()*COLORS.length)],
+        dx: (Math.random()-0.5)*0.35, dy: (Math.random()-0.5)*0.35,
+        opacity: 0.04+Math.random()*0.06, pulse: Math.random()*Math.PI*2,
+        pulseSpeed: 0.008+Math.random()*0.012 };
+    }
+    function makeDot() {
+      return { x: Math.random()*W, y: H+10, r: 2+Math.random()*4,
+        color: COLORS[Math.floor(Math.random()*2)],
+        speed: 0.4+Math.random()*0.8, wobble: Math.random()*Math.PI*2,
+        wobbleSpeed: 0.02+Math.random()*0.03, opacity: 0.15+Math.random()*0.25 };
+    }
+    function init() { resize(); orbs = Array.from({length:9}, makeOrb); dots = Array.from({length:22}, makeDot); }
+    function draw() {
+      ctx.clearRect(0,0,W,H);
+      orbs.forEach(o => {
+        o.pulse += o.pulseSpeed;
+        const r = o.r + Math.sin(o.pulse)*12;
+        const g = ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,r);
+        g.addColorStop(0, o.color+'cc'); g.addColorStop(1, o.color+'00');
+        ctx.globalAlpha = o.opacity;
+        ctx.beginPath(); ctx.arc(o.x,o.y,r,0,Math.PI*2);
+        ctx.fillStyle = g; ctx.fill();
+        o.x+=o.dx; o.y+=o.dy;
+        if(o.x < -o.r) o.x=W+o.r; if(o.x > W+o.r) o.x=-o.r;
+        if(o.y < -o.r) o.y=H+o.r; if(o.y > H+o.r) o.y=-o.r;
+      });
+      dots.forEach(d => {
+        d.y -= d.speed; d.wobble += d.wobbleSpeed;
+        const x = d.x + Math.sin(d.wobble)*18;
+        ctx.globalAlpha = d.opacity * Math.max(0, d.y/H);
+        ctx.beginPath(); ctx.arc(x,d.y,d.r,0,Math.PI*2);
+        ctx.fillStyle = d.color; ctx.fill();
+        if(d.y < -10) { d.y=H+10; d.x=Math.random()*W; }
+      });
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', resize);
+    init(); draw();
+
+    /* ── SCROLL POP-IN ── */
+    document.body.classList.add('js-ready');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('show'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.pop-in').forEach(el => obs.observe(el));
+
+    /* ── HERO BADGE PULSE ── */
+    const badge = document.querySelector('.hero-badge-pill');
+    if (badge) {
+      badge.style.transition = 'transform 0.3s ease';
+      setInterval(() => {
+        badge.style.transform = 'scale(1.05)';
+        setTimeout(() => { badge.style.transform = ''; }, 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
